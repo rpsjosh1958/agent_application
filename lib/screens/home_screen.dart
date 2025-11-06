@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:io';
 import '../models/prospect.dart';
+import 'package:flutter/cupertino.dart'; 
 import '../services/storage_service.dart';
 import 'form_screen.dart';
 import 'prospect_detail_screen.dart';
@@ -62,8 +62,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
   }
 
-  // Remove the _checkForCurrentForm and _showResumeFormDialog methods entirely
-
   void _searchProspects(String query) {
     setState(() {
       if (query.isEmpty) {
@@ -89,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void _navigateToForm([Prospect? prospect]) {
     Navigator.of(context)
         .push(
-          CupertinoPageRoute(
+          MaterialPageRoute(
             builder: (context) => FormScreen(prospect: prospect),
           ),
         )
@@ -99,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void _navigateToDetail(Prospect prospect) {
     Navigator.of(context)
         .push(
-          CupertinoPageRoute(
+          MaterialPageRoute(
             builder: (context) => ProspectDetailScreen(prospect: prospect),
           ),
         )
@@ -162,8 +160,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           });
         }
       },
-      child: CupertinoPageScaffold(
-        child: SafeArea(
+      child: Scaffold(
+        body: SafeArea(
           child: Center(
             child: SizedBox(
               width: MediaQuery.of(context).size.width - 50,
@@ -206,22 +204,25 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         ),
                         Container(
                           margin: const EdgeInsets.only(top: 4),
-                          child: CupertinoButton(
-                            padding: EdgeInsets.zero,
-                            child: Container(
-                              width: 44,
-                              height: 44,
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 202, 217, 239),
-                                borderRadius: BorderRadius.circular(22),
-                              ),
-                              child: const Icon(
-                                CupertinoIcons.bell_solid,
-                                size: 27,
-                                color: Color.fromARGB(255, 35, 41, 71),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(22),
+                              onTap: () {},
+                              child: Container(
+                                width: 44,
+                                height: 44,
+                                decoration: BoxDecoration(
+                                  color: const Color.fromARGB(255, 202, 217, 239),
+                                  borderRadius: BorderRadius.circular(22),
+                                ),
+                                child: const Icon(
+                                  Icons.notifications,
+                                  size: 27,
+                                  color: Color.fromARGB(255, 35, 41, 71),
+                                ),
                               ),
                             ),
-                            onPressed: () {},
                           ),
                         ),
                       ],
@@ -261,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               fontSize: 14,
                               color: _tabController.index == 0
                                   ? const Color.fromARGB(255, 59, 69, 119)
-                                  : CupertinoColors.systemGrey,
+                                  : Colors.grey,
                             ),
                           ),
                         ),
@@ -296,7 +297,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               fontSize: 14,
                               color: _tabController.index == 1
                                   ? const Color.fromARGB(255, 59, 69, 119)
-                                  : CupertinoColors.systemGrey,
+                                  : Colors.grey,
                             ),
                           ),
                         ),
@@ -305,65 +306,90 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 255, 255, 255),
-                        border: Border.all(
-                          color: CupertinoColors.systemGrey4,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(25),
+                    child: TextField(
+                      controller: _searchController,
+                      style: const TextStyle(
+                        fontFamily: 'MontserratLight',
+                        fontWeight: FontWeight.w400,
                       ),
-                      child: CupertinoTextField(
-                        controller: _searchController,
-                        placeholder: 'Search for a client',
-                        placeholderStyle: const TextStyle(
+                      decoration: InputDecoration(
+                        hintText: 'Search for a client',
+                        hintStyle: const TextStyle(
                           fontFamily: 'MontserratRegular',
                           fontWeight: FontWeight.w400,
-                          color: CupertinoColors.systemGrey2,
+                          color: Colors.grey,
                         ),
-                        style: const TextStyle(
-                          fontFamily: 'MontserratLight',
-                          fontWeight: FontWeight.w400,
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 255, 255, 255),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: BorderSide(
+                            color: Colors.grey.shade300,
+                            width: 1,
+                          ),
                         ),
-                        decoration: const BoxDecoration(),
-                        padding: const EdgeInsets.symmetric(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: BorderSide(
+                            color: Colors.grey.shade300,
+                            width: 1,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: BorderSide(
+                            color: const Color.fromARGB(255, 59, 69, 119),
+                            width: 1,
+                          ),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
                           horizontal: 20,
                           vertical: 16,
                         ),
-                        prefix: const Padding(
+                        prefixIcon: const Padding(
                           padding: EdgeInsets.only(left: 20, right: 5),
                           child: Icon(
-                            CupertinoIcons.search,
-                            color: CupertinoColors.systemGrey2,
+                            Icons.search,
+                            color: Colors.grey,
                             size: 24,
                           ),
                         ),
-                        onChanged: _searchProspects,
+                        prefixIconConstraints: const BoxConstraints(
+                          minWidth: 0,
+                          minHeight: 0,
+                        ),
                       ),
+                      onChanged: _searchProspects,
                     ),
                   ),
                   Expanded(
                     child: _isLoading
-                        ? const Center(child: CupertinoActivityIndicator())
+                        ? const Center(child: CircularProgressIndicator())
                         : _buildProspectsList(),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: SizedBox(
                       width: double.infinity,
-                      child: CupertinoButton(
-                        color: const Color.fromARGB(255, 59, 69, 119),
-                        borderRadius: BorderRadius.circular(30),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(255, 59, 69, 119),
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                        ),
+                        onPressed: () => _navigateToForm(),
                         child: const Text(
                           'Add a new customer',
                           style: TextStyle(
-                            fontFamily: 'MontserratRegular',
+                            fontFamily: 'MontserratLight',
                             fontWeight: FontWeight.w600,
-                            color: CupertinoColors.white,
+                            fontSize: 16,
+                            color: Colors.white,
                           ),
                         ),
-                        onPressed: () => _navigateToForm(),
                       ),
                     ),
                   ),
@@ -464,7 +490,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               fontSize: 12,
               fontFamily: 'MontserratLight',
               fontWeight: FontWeight.w700,
-              color: CupertinoColors.systemGrey,
+              color: Colors.grey,
             ),
           ),
         ),
@@ -498,99 +524,97 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         children: [
           Container(
             margin: const EdgeInsets.symmetric(vertical: 8),
-            child: CupertinoButton(
-              padding: EdgeInsets.zero,
-              onPressed:
-                  null, // Disable the button since we're using GestureDetector
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: CupertinoColors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: CupertinoColors.systemGrey4,
-                    width: 1,
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: null, // Disable the tap since we're using GestureDetector
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: Colors.grey.shade300,
+                      width: 1,
+                    ),
                   ),
-                ),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 24,
-                      backgroundImage: prospect.selfiePath != null
-                          ? FileImage(File(prospect.selfiePath!))
-                          : null,
-                      child: prospect.selfiePath == null
-                          ? const Icon(CupertinoIcons.person)
-                          : null,
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  prospect.fullName,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'MontserratLight',
-                                    fontWeight: FontWeight.w400,
-                                    color: CupertinoColors.black,
-                                  ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: prospect.isComplete
-                                      ? CupertinoColors.systemGreen.withOpacity(
-                                          0.1,
-                                        )
-                                      : CupertinoColors.systemGrey.withOpacity(
-                                          0.1,
-                                        ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Text(
-                                  prospect.isComplete
-                                      ? 'Complete'
-                                      : 'Incomplete',
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    fontFamily: 'MontserratRegular',
-                                    fontWeight: FontWeight.w700,
-                                    color: prospect.isComplete
-                                        ? const Color.fromARGB(255, 41, 131, 64)
-                                        : const Color.fromARGB(255, 120, 120, 120),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            'Onboarded on: ${DateFormat('dd/MM/yyyy').format(prospect.onboardedDate)}',
-                            style: const TextStyle(
-                              fontSize: 13,
-                              fontFamily: 'MontserratRegular',
-                              fontWeight: FontWeight.w300,
-                              color: CupertinoColors.systemGrey,
-                            ),
-                          ),
-                        ],
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 24,
+                        backgroundImage: prospect.selfiePath != null
+                            ? FileImage(File(prospect.selfiePath!))
+                            : null,
+                        child: prospect.selfiePath == null
+                            ? const Icon(Icons.person)
+                            : null,
                       ),
-                    ),
-                  ],
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    prospect.fullName,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: 'MontserratLight',
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                    ),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 4,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: prospect.isComplete
+                                        ? Colors.green.withValues(alpha: 0.1)
+                                        : Colors.grey.withValues(alpha: 0.1),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Text(
+                                    prospect.isComplete
+                                        ? 'Complete'
+                                        : 'Incomplete',
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      fontFamily: 'MontserratRegular',
+                                      fontWeight: FontWeight.w700,
+                                      color: prospect.isComplete
+                                          ? const Color.fromARGB(255, 0, 93, 53)
+                                          : const Color.fromARGB(255, 120, 120, 120),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              'Onboarded on: ${DateFormat('dd/MM/yyyy').format(prospect.onboardedDate)}',
+                              style: const TextStyle(
+                                fontSize: 13,
+                                fontFamily: 'MontserratRegular',
+                                fontWeight: FontWeight.w300,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -604,17 +628,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               child: Container(
                 width: 120,
                 decoration: BoxDecoration(
-                  color: CupertinoColors.white,
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(8),
                   boxShadow: [
                     BoxShadow(
-                      color: CupertinoColors.systemGrey.withOpacity(0.3),
+                      color: Colors.grey.withValues(alpha: 0.3),
                       blurRadius: 10,
                       offset: const Offset(0, 2),
                     ),
                   ],
                   border: Border.all(
-                    color: CupertinoColors.systemGrey4,
+                    color: Colors.grey.shade300,
                     width: 1,
                   ),
                 ),
@@ -622,68 +646,76 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     if (!prospect.isComplete)
-                      CupertinoButton(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
+                      Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              _selectedProspectId = null;
+                            });
+                            _navigateToForm(prospect);
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 8,
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.edit,
+                                  size: 16,
+                                  color: Color.fromARGB(255, 59, 69, 119),
+                                ),
+                                SizedBox(width: 6),
+                                Text(
+                                  'Edit',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: 'MontserratLight',
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                        onPressed: () {
+                      ),
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {
                           setState(() {
                             _selectedProspectId = null;
                           });
-                          _navigateToForm(prospect);
+                          _confirmDelete(prospect);
                         },
-                        minimumSize: Size(0, 0),
-                        child: const Row(
-                          children: [
-                            Icon(
-                              CupertinoIcons.pencil,
-                              size: 16,
-                              color: Color.fromARGB(255, 59, 69, 119),
-                            ),
-                            SizedBox(width: 6),
-                            Text(
-                              'Edit',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'MontserratLight',
-                                fontWeight: FontWeight.w600,
-                                color: Color.fromARGB(255, 0, 0, 0),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.delete,
+                                size: 16,
+                                color: Colors.red,
                               ),
-                            ),
-                          ],
+                              SizedBox(width: 6),
+                              Text(
+                                'Delete',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'MontserratLight',
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    CupertinoButton(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 8,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _selectedProspectId = null;
-                        });
-                        _confirmDelete(prospect);
-                      },
-                      minimumSize: Size(0, 0),
-                      child: const Row(
-                        children: [
-                          Icon(
-                            CupertinoIcons.delete,
-                            size: 16,
-                            color: CupertinoColors.systemRed,
-                          ),
-                          SizedBox(width: 6),
-                          Text(
-                            'Delete',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'MontserratLight',
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromARGB(255, 0, 0, 0),
-                            ),
-                          ),
-                        ],
                       ),
                     ),
                   ],

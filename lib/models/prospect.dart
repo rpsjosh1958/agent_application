@@ -14,7 +14,8 @@ class Prospect {
   final String? ghanaPostGPS;
   final String? residentialAddress;
   final String? selfiePath;
-  final String? idCardPath;
+  final String? idCardFrontPath;
+  final String? idCardBackPath;
   final DateTime onboardedDate;
   final bool isComplete;
   final int currentStep;
@@ -33,7 +34,8 @@ class Prospect {
     this.ghanaPostGPS,
     this.residentialAddress,
     this.selfiePath,
-    this.idCardPath,
+    this.idCardFrontPath,
+    this.idCardBackPath,
     required this.onboardedDate,
     this.isComplete = false,
     this.currentStep = 0,
@@ -54,7 +56,8 @@ class Prospect {
       'ghanaPostGPS': ghanaPostGPS,
       'residentialAddress': residentialAddress,
       'selfiePath': selfiePath,
-      'idCardPath': idCardPath,
+      'idCardFrontPath': idCardFrontPath,
+      'idCardBackPath': idCardBackPath,
       'onboardedDate': onboardedDate.millisecondsSinceEpoch,
       'isComplete': isComplete,
       'currentStep': currentStep,
@@ -78,7 +81,8 @@ class Prospect {
       ghanaPostGPS: map['ghanaPostGPS'],
       residentialAddress: map['residentialAddress'],
       selfiePath: map['selfiePath'],
-      idCardPath: map['idCardPath'],
+      idCardFrontPath: map['idCardFrontPath'],
+      idCardBackPath: map['idCardBackPath'],
       onboardedDate: DateTime.fromMillisecondsSinceEpoch(map['onboardedDate']),
       isComplete: map['isComplete'] ?? false,
       currentStep: map['currentStep'] ?? 0,
@@ -103,7 +107,8 @@ class Prospect {
     String? ghanaPostGPS,
     String? residentialAddress,
     String? selfiePath,
-    String? idCardPath,
+    String? idCardFrontPath,
+    String? idCardBackPath,
     DateTime? onboardedDate,
     bool? isComplete,
     int? currentStep,
@@ -122,7 +127,8 @@ class Prospect {
       ghanaPostGPS: ghanaPostGPS ?? this.ghanaPostGPS,
       residentialAddress: residentialAddress ?? this.residentialAddress,
       selfiePath: selfiePath ?? this.selfiePath,
-      idCardPath: idCardPath ?? this.idCardPath,
+      idCardFrontPath: idCardFrontPath ?? this.idCardFrontPath,
+      idCardBackPath: idCardBackPath ?? this.idCardBackPath,
       onboardedDate: onboardedDate ?? this.onboardedDate,
       isComplete: isComplete ?? this.isComplete,
       currentStep: currentStep ?? this.currentStep,
@@ -147,7 +153,7 @@ class Prospect {
         primaryPhone!.isNotEmpty &&
         selfiePath != null &&
         selfiePath!.isNotEmpty &&
-        idCardPath != null &&
-        idCardPath!.isNotEmpty;
+        idCardFrontPath != null &&
+        idCardFrontPath!.isNotEmpty;
   }
 }

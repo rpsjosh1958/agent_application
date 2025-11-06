@@ -1,6 +1,7 @@
 # Insurance Agent Flutter App
 
-A Flutter mobile application designed for insurance agents to efficiently collect, manage, and track prospect information.
+A Flutter mobile application designed for insurance agents to onboard a customer they
+meet on the field.
 
 # Install dependencies
 flutter pub get
@@ -15,21 +16,19 @@ flutter run
 - `image_cropper` - Image editing and cropping
 - `shared_preferences` - Local key-value storage
 - `intl` - Date formatting and localization
+- `camera` - Camera preview in circular modal
 
-## 🛠️ Key Features Implementation
+## Key Features Implementation
 
 ### Form Management
 - **Multi-step wizard**: Personal details → Selfie → ID cards → Summary
 - **Field validation**: Required fields, format checks, error messages
-- **Draft saving**: Auto-save form progress locally
+- **Draft saving**: Save form progress locally
 
 ### Data Persistence
-```dart
 // Save prospect
 await StorageService.saveProspect(prospect);
 
 // Retrieve all prospects
 final prospects = await StorageService.getAllProspects();
 ```
-
-#
