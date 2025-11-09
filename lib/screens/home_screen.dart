@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:io';
 import '../models/prospect.dart';
-import 'package:flutter/cupertino.dart'; 
+import 'package:flutter/cupertino.dart';
 import '../services/storage_service.dart';
 import 'form_screen.dart';
 import 'prospect_detail_screen.dart';
@@ -159,241 +159,262 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             _selectedProspectId = null;
           });
         }
+        //hide keyboard when tapping outside
+        FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: Center(
             child: SizedBox(
               width: MediaQuery.of(context).size.width - 50,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Custom Header
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.only(
+                  bottom: 20,
+                ), // Add bottom padding
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Custom Header
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Welcome Grace,',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'MontserratLight',
+                                    color: Color.fromRGBO(64, 64, 64, 1),
+                                    letterSpacing: -0.5,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                const Text(
+                                  'Check out the list of clients you onboarded',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontFamily: 'MontserratLight',
+                                    color: Color.fromRGBO(42, 42, 42, 1),
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 4),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(22),
+                                onTap: () {},
+                                child: Container(
+                                  width: 44,
+                                  height: 44,
+                                  decoration: BoxDecoration(
+                                    color: const Color.fromARGB(
+                                      255,
+                                      202,
+                                      217,
+                                      239,
+                                    ),
+                                    borderRadius: BorderRadius.circular(22),
+                                  ),
+                                  child: const Icon(
+                                    Icons.notifications,
+                                    size: 27,
+                                    color: Color.fromARGB(255, 35, 41, 71),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Welcome Grace,',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: 'MontserratLight',
-                                  color: Color.fromRGBO(64, 64, 64, 1),
-                                  letterSpacing: -0.5,
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _tabController.index = 0;
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 0,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: _tabController.index == 0
+                                      ? const Color.fromARGB(255, 59, 69, 119)
+                                      : Colors.transparent,
+                                  width: 1,
                                 ),
                               ),
-                              const SizedBox(height: 4),
-                              const Text(
-                                'Check out the list of clients you onboarded',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontFamily: 'MontserratLight',
-                                  color: Color.fromRGBO(42, 42, 42, 1),
-                                  fontWeight: FontWeight.w400,
-                                ),
+                            ),
+                            child: Text(
+                              "Today's clients",
+                              style: TextStyle(
+                                fontFamily: 'MontserratRegular',
+                                fontWeight: FontWeight.w800,
+                                fontSize: 14,
+                                color: _tabController.index == 0
+                                    ? const Color.fromARGB(255, 59, 69, 119)
+                                    : Colors.grey,
                               ),
-                            ],
+                            ),
                           ),
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 4),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(22),
-                              onTap: () {},
-                              child: Container(
-                                width: 44,
-                                height: 44,
-                                decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 202, 217, 239),
-                                  borderRadius: BorderRadius.circular(22),
+                        const SizedBox(width: 16),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _tabController.index = 1;
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 0,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: _tabController.index == 1
+                                      ? const Color.fromARGB(255, 59, 69, 119)
+                                      : Colors.transparent,
+                                  width: 1,
                                 ),
-                                child: const Icon(
-                                  Icons.notifications,
-                                  size: 27,
-                                  color: Color.fromARGB(255, 35, 41, 71),
-                                ),
+                              ),
+                            ),
+                            child: Text(
+                              'Previous list',
+                              style: TextStyle(
+                                fontFamily: 'MontserratRegular',
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14,
+                                color: _tabController.index == 1
+                                    ? const Color.fromARGB(255, 59, 69, 119)
+                                    : Colors.grey,
                               ),
                             ),
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _tabController.index = 0;
-                          });
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 8,
-                            horizontal: 0,
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                color: _tabController.index == 0
-                                    ? const Color.fromARGB(255, 59, 69, 119)
-                                    : Colors.transparent,
-                                width: 1,
-                              ),
-                            ),
-                          ),
-                          child: Text(
-                            "Today's clients",
-                            style: TextStyle(
-                              fontFamily: 'MontserratRegular',
-                              fontWeight: FontWeight.w800,
-                              fontSize: 14,
-                              color: _tabController.index == 0
-                                  ? const Color.fromARGB(255, 59, 69, 119)
-                                  : Colors.grey,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _tabController.index = 1;
-                          });
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 8,
-                            horizontal: 0,
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                color: _tabController.index == 1
-                                    ? const Color.fromARGB(255, 59, 69, 119)
-                                    : Colors.transparent,
-                                width: 1,
-                              ),
-                            ),
-                          ),
-                          child: Text(
-                            'Previous list',
-                            style: TextStyle(
-                              fontFamily: 'MontserratRegular',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                              color: _tabController.index == 1
-                                  ? const Color.fromARGB(255, 59, 69, 119)
-                                  : Colors.grey,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: TextField(
-                      controller: _searchController,
-                      style: const TextStyle(
-                        fontFamily: 'MontserratLight',
-                        fontWeight: FontWeight.w400,
-                      ),
-                      decoration: InputDecoration(
-                        hintText: 'Search for a client',
-                        hintStyle: const TextStyle(
-                          fontFamily: 'MontserratRegular',
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: TextField(
+                        controller: _searchController,
+                        style: const TextStyle(
+                          fontFamily: 'MontserratLight',
                           fontWeight: FontWeight.w400,
-                          color: Colors.grey,
                         ),
-                        filled: true,
-                        fillColor: const Color.fromARGB(255, 255, 255, 255),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(
-                            color: Colors.grey.shade300,
-                            width: 1,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(
-                            color: Colors.grey.shade300,
-                            width: 1,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(
-                            color: const Color.fromARGB(255, 59, 69, 119),
-                            width: 1,
-                          ),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 16,
-                        ),
-                        prefixIcon: const Padding(
-                          padding: EdgeInsets.only(left: 20, right: 5),
-                          child: Icon(
-                            Icons.search,
+                        decoration: InputDecoration(
+                          hintText: 'Search for a client',
+                          hintStyle: const TextStyle(
+                            fontFamily: 'MontserratRegular',
+                            fontWeight: FontWeight.w400,
                             color: Colors.grey,
-                            size: 24,
+                          ),
+                          filled: true,
+                          fillColor: const Color.fromARGB(255, 255, 255, 255),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade300,
+                              width: 1,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade300,
+                              width: 1,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 59, 69, 119),
+                              width: 1,
+                            ),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 16,
+                          ),
+                          prefixIcon: const Padding(
+                            padding: EdgeInsets.only(left: 20, right: 5),
+                            child: Icon(
+                              Icons.search,
+                              color: Colors.grey,
+                              size: 24,
+                            ),
+                          ),
+                          prefixIconConstraints: const BoxConstraints(
+                            minWidth: 0,
+                            minHeight: 0,
                           ),
                         ),
-                        prefixIconConstraints: const BoxConstraints(
-                          minWidth: 0,
-                          minHeight: 0,
+                        onChanged: _searchProspects,
+                      ),
+                    ),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxHeight: MediaQuery.of(context).size.height * 0.5,
+                      ),
+                      child: _isLoading
+                          ? const Center(child: CircularProgressIndicator())
+                          : _buildProspectsList(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromARGB(
+                              255,
+                              59,
+                              69,
+                              119,
+                            ),
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                          ),
+                          onPressed: () => _navigateToForm(),
+                          child: const Text(
+                            'Add a new customer',
+                            style: TextStyle(
+                              fontFamily: 'MontserratLight',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
-                      onChanged: _searchProspects,
                     ),
-                  ),
-                  Expanded(
-                    child: _isLoading
-                        ? const Center(child: CircularProgressIndicator())
-                        : _buildProspectsList(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 59, 69, 119),
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                        ),
-                        onPressed: () => _navigateToForm(),
-                        child: const Text(
-                          'Add a new customer',
-                          style: TextStyle(
-                            fontFamily: 'MontserratLight',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -519,7 +540,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             _navigateToForm(prospect);
           }
         }
-      }, 
+      },
       child: Stack(
         children: [
           Container(
@@ -528,16 +549,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               color: Colors.transparent,
               child: InkWell(
                 borderRadius: BorderRadius.circular(12),
-                onTap: null, // Disable the tap since we're using GestureDetector
+                onTap:
+                    null, // Disable the tap since we're using GestureDetector
                 child: Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Colors.grey.shade300,
-                      width: 1,
-                    ),
+                    border: Border.all(color: Colors.grey.shade300, width: 1),
                   ),
                   child: Row(
                     children: [
@@ -594,7 +613,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       fontWeight: FontWeight.w700,
                                       color: prospect.isComplete
                                           ? const Color.fromARGB(255, 0, 93, 53)
-                                          : const Color.fromARGB(255, 120, 120, 120),
+                                          : const Color.fromARGB(
+                                              255,
+                                              120,
+                                              120,
+                                              120,
+                                            ),
                                     ),
                                   ),
                                 ),
@@ -637,10 +661,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       offset: const Offset(0, 2),
                     ),
                   ],
-                  border: Border.all(
-                    color: Colors.grey.shade300,
-                    width: 1,
-                  ),
+                  border: Border.all(color: Colors.grey.shade300, width: 1),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -698,11 +719,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           ),
                           child: Row(
                             children: [
-                              Icon(
-                                Icons.delete,
-                                size: 16,
-                                color: Colors.red,
-                              ),
+                              Icon(Icons.delete, size: 16, color: Colors.red),
                               SizedBox(width: 6),
                               Text(
                                 'Delete',
