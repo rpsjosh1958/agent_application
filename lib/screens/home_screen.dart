@@ -519,7 +519,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             _navigateToForm(prospect);
           }
         }
-      },
+      }, 
       child: Stack(
         children: [
           Container(
