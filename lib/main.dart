@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
 
 void main() {
+  // entry point of the application
   runApp(const AgentApp());
 }
 
@@ -10,10 +11,13 @@ class AgentApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // main application widget
     return MaterialApp(
       title: 'Insurance Agent',
       theme: ThemeData(
-        primarySwatch: _createMaterialColor(const Color.fromARGB(255, 59, 69, 119)),
+        primarySwatch: _createMaterialColor(
+          const Color.fromARGB(255, 59, 69, 119),
+        ),
         primaryColor: const Color.fromARGB(255, 59, 69, 119),
         scaffoldBackgroundColor: const Color(0xFFF9FAFB),
         fontFamily: 'MontserratRegular',
@@ -38,13 +42,18 @@ class AgentApp extends StatelessWidget {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: Color.fromARGB(255, 59, 69, 119)),
+            borderSide: const BorderSide(
+              color: Color.fromARGB(255, 59, 69, 119),
+            ),
           ),
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: const BorderSide(color: Colors.red),
           ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 20,
+          ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
@@ -78,6 +87,7 @@ class AgentApp extends StatelessWidget {
     );
   }
 
+  // function to create a material color from a single color
   static MaterialColor _createMaterialColor(Color color) {
     List strengths = <double>[.05];
     Map<int, Color> swatch = {};

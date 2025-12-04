@@ -27,7 +27,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    // initializes the tab controller
     _tabController = TabController(length: 2, vsync: this);
+    // loads the prospects list
     _loadProspects();
   }
 
@@ -38,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  // loads prospects from local storage
   Future<void> _loadProspects() async {
     setState(() {
       _isLoading = true;
@@ -62,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
   }
 
+  // filters the prospects list based on search query
   void _searchProspects(String query) {
     setState(() {
       if (query.isEmpty) {
@@ -159,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             _selectedProspectId = null;
           });
         }
-        //hide keyboard when tapping outside
+        // hide keyboard when tapping outside
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
@@ -432,11 +436,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       return _buildEmptyState();
     }
 
-    // Sort prospects in descending order (latest first)
+    // sort prospects by date
     final sortedProspects = List<Prospect>.from(prospects)
       ..sort((a, b) => b.onboardedDate.compareTo(a.onboardedDate));
 
-    // Group prospects by date
+    // group prospects by date
     final groupedProspects = <String, List<Prospect>>{};
     for (final prospect in sortedProspects) {
       final dateKey = _getDateLabel(prospect.onboardedDate);
@@ -549,8 +553,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               color: Colors.transparent,
               child: InkWell(
                 borderRadius: BorderRadius.circular(12),
-                onTap:
-                    null, // Disable the tap since we're using GestureDetector
+                onTap: null, // disable tap since we use gesture detector
                 child: Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(

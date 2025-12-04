@@ -157,3 +157,4 @@ class Prospect {
         idCardFrontPath!.isNotEmpty;
   }
 }
+

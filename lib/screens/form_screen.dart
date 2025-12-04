@@ -20,7 +20,7 @@ class _FormScreenState extends State<FormScreen> {
   int _currentStep = 0;
   late Prospect _prospect;
 
-  // Validation state tracking
+  // validation state tracking
   final Set<String> _touchedFields = {};
 
   @override
@@ -56,9 +56,9 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   Future<void> _saveAndContinue() async {
-    // Validate current step before proceeding
+    // validate current step
     if (_currentStep == 0) {
-      // Mark all required fields as touched to show errors
+      // mark fields as touched for required fields
       setState(() {
         _touchedFields.addAll([
           'first_name',
@@ -69,9 +69,9 @@ class _FormScreenState extends State<FormScreen> {
         ]);
       });
 
-      // Check if step is valid
+      // check if step is valid
       if (!_isStepValid()) {
-        return; // Don't proceed if validation fails
+        return; 
       }
     }
 
@@ -87,7 +87,7 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   Future<void> _saveAndExit() async {
-    // Save to both current form AND main prospects list
+    // save to storage
     await StorageService.saveProspect(_prospect);
     await StorageService.saveCurrentForm(_prospect);
 
@@ -110,8 +110,8 @@ class _FormScreenState extends State<FormScreen> {
             isDefaultAction: true,
             child: const Text('OK'),
             onPressed: () {
-              Navigator.of(context).pop(); // Close the alert
-              Navigator.of(context).pop(); // Navigate back to home
+              Navigator.of(context).pop(); 
+              Navigator.of(context).pop(); 
             },
           ),
         ],
@@ -120,9 +120,9 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   Future<void> _finishForm() async {
-    // Force complete status when finishing the form
+    // mark as complete
     final updatedProspect = _prospect.copyWith(
-      isComplete: true, // Always mark as complete when finishing
+      isComplete: true,
     );
 
     try {
@@ -159,7 +159,7 @@ class _FormScreenState extends State<FormScreen> {
 
   bool _isStepValid() {
     switch (_currentStep) {
-      case 0: // Personal and Contact Details combined
+      case 0: // personal and contact details
         return _prospect.firstName.isNotEmpty &&
             _prospect.lastName.isNotEmpty &&
             _prospect.dateOfBirth != null &&
@@ -167,11 +167,11 @@ class _FormScreenState extends State<FormScreen> {
             _prospect.nationality!.isNotEmpty &&
             _prospect.primaryPhone != null &&
             _prospect.primaryPhone!.isNotEmpty;
-      case 1: // Selfie
+      case 1: // selfie
         return _prospect.selfiePath != null;
-      case 2: // ID Card Upload - make this optional for now
-        return true; // You can change this to require ID card if needed
-      case 3: // Summary
+      case 2: // id card upload
+        return true;
+      case 3: // summary
         return true;
       default:
         return false;
@@ -208,7 +208,7 @@ class _FormScreenState extends State<FormScreen> {
                         ),
                         onPressed: () {
                           if (_currentStep > 0) {
-                            // Go to previous step in the form
+                            // go to previous step
                             setState(() {
                               _currentStep--;
                               _prospect = _prospect.copyWith(
@@ -216,7 +216,7 @@ class _FormScreenState extends State<FormScreen> {
                               );
                             });
                           } else {
-                            // If on first step, go back to home with confirmation if there are unsaved changes
+                            // confirm exit if unsaved changes
                             _confirmExit();
                           }
                         },
@@ -242,7 +242,7 @@ class _FormScreenState extends State<FormScreen> {
                   ),
                   child: Stack(
                     children: [
-                      // Background track
+                      // background track for progress
                       Container(
                         height: 4,
                         decoration: BoxDecoration(
@@ -255,10 +255,11 @@ class _FormScreenState extends State<FormScreen> {
                           borderRadius: BorderRadius.circular(2),
                         ),
                       ),
-                      // Progress fill
+                      // progress fill
                       Container(
                         height: 4,
-                        width: (MediaQuery.of(context).size.width - 20) *
+                        width:
+                            (MediaQuery.of(context).size.width - 20) *
                             ((_currentStep + 1) / 4),
                         decoration: BoxDecoration(
                           color: const Color.fromARGB(255, 59, 69, 119),
@@ -279,8 +280,9 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   void _confirmExit() {
-    // Check if there are any unsaved changes
-    final hasUnsavedChanges = _prospect.firstName.isNotEmpty ||
+    // check for unsaved changes
+    final hasUnsavedChanges =
+        _prospect.firstName.isNotEmpty ||
         _prospect.lastName.isNotEmpty ||
         _prospect.primaryPhone != null ||
         _prospect.selfiePath != null ||
@@ -288,7 +290,7 @@ class _FormScreenState extends State<FormScreen> {
         _prospect.idCardBackPath != null;
 
     if (!hasUnsavedChanges) {
-      // No unsaved changes, just go back
+      // exit if no changes
       Navigator.of(context).pop();
       return;
     }
@@ -306,8 +308,8 @@ class _FormScreenState extends State<FormScreen> {
             isDestructiveAction: true,
             child: const Text('Discard'),
             onPressed: () {
-              Navigator.of(context).pop(); // Close dialog
-              Navigator.of(context).pop(); // Navigate home
+              Navigator.of(context).pop(); 
+              Navigator.of(context).pop(); 
             },
           ),
           CupertinoDialogAction(
@@ -318,8 +320,8 @@ class _FormScreenState extends State<FormScreen> {
             isDefaultAction: true,
             child: const Text('Save & Exit'),
             onPressed: () async {
-              Navigator.of(context).pop(); // Close dialog
-              await _saveAndExit(); // This will now properly navigate home
+              Navigator.of(context).pop(); 
+              await _saveAndExit(); 
             },
           ),
         ],
@@ -385,7 +387,7 @@ class _FormScreenState extends State<FormScreen> {
               ),
             ),
           ),
-          // Only show Save and Exit button if NOT on summary step
+          // show save and exit button
           if (_currentStep != 3) ...[
             const SizedBox(height: 12),
             SizedBox(

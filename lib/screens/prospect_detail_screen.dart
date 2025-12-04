@@ -25,7 +25,7 @@ class _ProspectDetailScreenState extends State<ProspectDetailScreen> {
             width: MediaQuery.of(context).size.width - 20,
             child: Column(
               children: [
-                // Custom Header
+                // custom header
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
                   child: Row(
@@ -104,7 +104,7 @@ class _ProspectDetailScreenState extends State<ProspectDetailScreen> {
                           ),
                         const SizedBox(height: 50),
 
-                        // Personal Details Section
+                        // personal details section
                         _buildCollapsibleSection(
                           title: 'Personal Details',
                           isExpanded: _isPersonalDetailsExpanded,
@@ -140,7 +140,7 @@ class _ProspectDetailScreenState extends State<ProspectDetailScreen> {
                         ),
                         const SizedBox(height: 25),
 
-                        // Contact Details Section
+                        // contact details section
                         _buildCollapsibleSection(
                           title: 'Contact Details',
                           isExpanded: _isContactDetailsExpanded,
@@ -180,7 +180,7 @@ class _ProspectDetailScreenState extends State<ProspectDetailScreen> {
                         ),
                         const SizedBox(height: 25),
 
-                        // Upload ID Card Section
+                        // upload id card section
                         _buildCollapsibleSection(
                           title: 'Upload ID Card',
                           isExpanded: _isUploadIdCardExpanded,
@@ -218,6 +218,7 @@ class _ProspectDetailScreenState extends State<ProspectDetailScreen> {
     );
   }
 
+  // build collapsible section
   Widget _buildCollapsibleSection({
     required String title,
     required bool isExpanded,
@@ -226,7 +227,7 @@ class _ProspectDetailScreenState extends State<ProspectDetailScreen> {
   }) {
     return Column(
       children: [
-        // Header
+        // header
         GestureDetector(
           onTap: onToggle,
           child: Container(
@@ -260,7 +261,7 @@ class _ProspectDetailScreenState extends State<ProspectDetailScreen> {
           ),
         ),
 
-        // Content
+        // content
         if (isExpanded) ...[
           const SizedBox(height: 20),
           Container(
@@ -280,6 +281,7 @@ class _ProspectDetailScreenState extends State<ProspectDetailScreen> {
     );
   }
 
+  // build summary item
   Widget _buildSummaryItem(String label, String value) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
@@ -310,6 +312,7 @@ class _ProspectDetailScreenState extends State<ProspectDetailScreen> {
     );
   }
 
+  // build image summary item
   Widget _buildImageSummaryItem(String label, String imagePath) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),

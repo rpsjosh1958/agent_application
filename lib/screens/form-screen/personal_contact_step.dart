@@ -65,7 +65,7 @@ class _PersonalContactStepState extends State<PersonalContactStep> {
     _dateOfBirth = widget.prospect.dateOfBirth;
     _nationality = widget.prospect.nationality;
 
-    // Add listeners to update prospect when fields change
+    // add listeners to update prospect
     _firstNameController.addListener(_updateProspect);
     _lastNameController.addListener(_updateProspect);
     _otherNamesController.addListener(_updateProspect);
@@ -75,6 +75,7 @@ class _PersonalContactStepState extends State<PersonalContactStep> {
     _residentialAddressController.addListener(_updateProspect);
   }
 
+  // update prospect
   void _updateProspect() {
     final updatedProspect = widget.prospect.copyWith(
       firstName: _firstNameController.text,
@@ -224,6 +225,7 @@ class _PersonalContactStepState extends State<PersonalContactStep> {
     );
   }
 
+  // build text field
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,
@@ -318,6 +320,7 @@ class _PersonalContactStepState extends State<PersonalContactStep> {
     );
   }
 
+  // build phone field
   Widget _buildPhoneField({
     required TextEditingController controller,
     required String label,
@@ -480,6 +483,7 @@ class _PersonalContactStepState extends State<PersonalContactStep> {
     );
   }
 
+  // build ghana post field
   Widget _buildGhanaPostField({
     required TextEditingController controller,
     required String label,
@@ -577,6 +581,7 @@ class _PersonalContactStepState extends State<PersonalContactStep> {
     );
   }
 
+  // build date of birth field
   Widget _buildDateOfBirthField() {
     final hasError =
         _dateOfBirth == null && widget.touchedFields.contains('date_of_birth');
@@ -681,6 +686,7 @@ class _PersonalContactStepState extends State<PersonalContactStep> {
     );
   }
 
+  // build nationality field
   Widget _buildNationalityField() {
     final hasError =
         (_nationality == null || _nationality!.isEmpty) &&

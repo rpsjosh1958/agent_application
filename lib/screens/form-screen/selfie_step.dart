@@ -41,11 +41,12 @@ class _SelfieStepState extends State<SelfieStep> {
     super.dispose();
   }
 
+  // initialize camera
   Future<void> _initializeCamera() async {
     try {
       _cameras = await availableCameras();
       if (_cameras != null && _cameras!.isNotEmpty) {
-        // Use front camera for selfie
+        // use front camera
         final frontCamera = _cameras!.firstWhere(
           (camera) => camera.lensDirection == CameraLensDirection.front,
           orElse: () => _cameras!.first,
@@ -69,6 +70,7 @@ class _SelfieStepState extends State<SelfieStep> {
     }
   }
 
+  // capture image
   Future<void> _captureImage() async {
     if (_cameraController == null || !_cameraController!.value.isInitialized) {
       return;
@@ -93,10 +95,8 @@ class _SelfieStepState extends State<SelfieStep> {
         _isCapturing = false;
       });
 
-      // Update the prospect with the new image path
-      final updatedProspect = widget.prospect.copyWith(
-        selfiePath: _selfiePath,
-      );
+      // update prospect with new image path
+      final updatedProspect = widget.prospect.copyWith(selfiePath: _selfiePath);
       widget.onProspectUpdated(updatedProspect);
     } catch (e) {
       setState(() {
@@ -106,6 +106,7 @@ class _SelfieStepState extends State<SelfieStep> {
     }
   }
 
+  // retake selfie
   void _retakeSelfie() {
     setState(() {
       _selfiePath = null;
@@ -160,12 +161,10 @@ class _SelfieStepState extends State<SelfieStep> {
                         height: 250,
                       )
                     : _isCameraInitialized
-                        ? CameraPreview(_cameraController!)
-                        : const Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                            ),
-                          ),
+                    ? CameraPreview(_cameraController!)
+                    : const Center(
+                        child: CircularProgressIndicator(color: Colors.white),
+                      ),
               ),
             ),
           ),
@@ -229,11 +228,7 @@ class _SelfieStepState extends State<SelfieStep> {
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.refresh,
-                      color: Colors.white,
-                      size: 20,
-                    ),
+                    Icon(Icons.refresh, color: Colors.white, size: 20),
                     SizedBox(width: 8),
                     Text(
                       'Retake Selfie',

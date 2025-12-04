@@ -94,7 +94,7 @@ class _SummaryStepState extends State<SummaryStep> {
 
           const SizedBox(height: 50),
 
-          // Personal Details Section
+          // personal details section
           _buildCollapsibleSection(
             title: 'Personal Details',
             isExpanded: _isPersonalDetailsExpanded,
@@ -120,7 +120,7 @@ class _SummaryStepState extends State<SummaryStep> {
           ),
           const SizedBox(height: 25),
 
-          // Contact Details Section
+          // contact details section
           _buildCollapsibleSection(
             title: 'Contact Details',
             isExpanded: _isContactDetailsExpanded,
@@ -157,7 +157,7 @@ class _SummaryStepState extends State<SummaryStep> {
           ),
           const SizedBox(height: 25),
 
-          // Upload ID Card Section
+          // upload id card section
           _buildCollapsibleSection(
             title: 'Upload ID Card',
             isExpanded: _isUploadIdCardExpanded,
@@ -167,10 +167,17 @@ class _SummaryStepState extends State<SummaryStep> {
             onEdit: () => widget.onNavigateToStep(2),
             children: [
               if (widget.prospect.idCardFrontPath != null)
-                _buildImageSummaryItem('ID Card Front', widget.prospect.idCardFrontPath!),
+                _buildImageSummaryItem(
+                  'ID Card Front',
+                  widget.prospect.idCardFrontPath!,
+                ),
               if (widget.prospect.idCardBackPath != null)
-                _buildImageSummaryItem('ID Card Back', widget.prospect.idCardBackPath!),
-              if (widget.prospect.idCardFrontPath == null && widget.prospect.idCardBackPath == null)
+                _buildImageSummaryItem(
+                  'ID Card Back',
+                  widget.prospect.idCardBackPath!,
+                ),
+              if (widget.prospect.idCardFrontPath == null &&
+                  widget.prospect.idCardBackPath == null)
                 _buildSummaryItem('Status', 'No files uploaded'),
             ],
           ),
@@ -179,6 +186,7 @@ class _SummaryStepState extends State<SummaryStep> {
     );
   }
 
+  // build collapsible section
   Widget _buildCollapsibleSection({
     required String title,
     required bool isExpanded,
@@ -188,7 +196,7 @@ class _SummaryStepState extends State<SummaryStep> {
   }) {
     return Column(
       children: [
-        // Header
+        // header
         GestureDetector(
           onTap: onToggle,
           child: Container(
@@ -222,7 +230,7 @@ class _SummaryStepState extends State<SummaryStep> {
           ),
         ),
 
-        // Content
+        // content
         if (isExpanded) ...[
           const SizedBox(height: 20),
           Container(
@@ -237,7 +245,7 @@ class _SummaryStepState extends State<SummaryStep> {
               children: children.isEmpty
                   ? children
                   : [
-                      // First item with edit button
+                      // first item with edit button
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -259,7 +267,7 @@ class _SummaryStepState extends State<SummaryStep> {
                           ),
                         ],
                       ),
-                      // Rest of the items
+                      // rest of the items
                       ...children.skip(1),
                     ],
             ),
@@ -269,6 +277,7 @@ class _SummaryStepState extends State<SummaryStep> {
     );
   }
 
+  // build summary item
   Widget _buildSummaryItem(String label, String value) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
@@ -299,6 +308,7 @@ class _SummaryStepState extends State<SummaryStep> {
     );
   }
 
+  // build image summary item
   Widget _buildImageSummaryItem(String label, String imagePath) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),

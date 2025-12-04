@@ -30,10 +30,12 @@ class _IdCardStepState extends State<IdCardStep> {
     _idCardBackPath = widget.prospect.idCardBackPath;
   }
 
+  // pick image
   Future<void> _pickImage(bool isFront) async {
     _showImageSourceModal(isFront);
   }
 
+  // show image source modal
   void _showImageSourceModal(bool isFront) {
     showModalBottomSheet(
       context: context,
@@ -54,7 +56,6 @@ class _IdCardStepState extends State<IdCardStep> {
         ),
         child: Column(
           children: [
-            // Header
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
               child: Row(
@@ -88,13 +89,13 @@ class _IdCardStepState extends State<IdCardStep> {
               ),
             ),
 
-            // Options
+            // options
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  // Camera option
+                  // camera option
                   Container(
                     width: double.infinity,
                     margin: const EdgeInsets.only(bottom: 16),
@@ -107,9 +108,7 @@ class _IdCardStepState extends State<IdCardStep> {
                           await _handleImagePick(ImageSource.camera, isFront);
                         },
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 1,
-                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 1),
                           child: Row(
                             children: [
                               Container(
@@ -142,7 +141,7 @@ class _IdCardStepState extends State<IdCardStep> {
                     ),
                   ),
 
-                  // Gallery option
+                  // gallery option
                   SizedBox(
                     width: double.infinity,
                     child: Material(
@@ -154,16 +153,19 @@ class _IdCardStepState extends State<IdCardStep> {
                           await _handleImagePick(ImageSource.gallery, isFront);
                         },
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 1,
-                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 1),
                           child: Row(
                             children: [
                               Container(
                                 width: 44,
                                 height: 44,
                                 decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 25, 158, 247),
+                                  color: const Color.fromARGB(
+                                    255,
+                                    25,
+                                    158,
+                                    247,
+                                  ),
                                   borderRadius: BorderRadius.circular(22),
                                 ),
                                 child: const Icon(
@@ -198,6 +200,7 @@ class _IdCardStepState extends State<IdCardStep> {
     );
   }
 
+  // handle image pick
   Future<void> _handleImagePick(ImageSource source, bool isFront) async {
     try {
       final picker = ImagePicker();
@@ -215,7 +218,7 @@ class _IdCardStepState extends State<IdCardStep> {
           }
         });
 
-        // Update the prospect with the new image path
+        // update prospect with new image path
         final updatedProspect = widget.prospect.copyWith(
           idCardFrontPath: _idCardFrontPath,
           idCardBackPath: _idCardBackPath,
@@ -280,6 +283,7 @@ class _IdCardStepState extends State<IdCardStep> {
     );
   }
 
+  // build image upload box
   Widget _buildImageUploadBox(bool isFront) {
     final imagePath = isFront ? _idCardFrontPath : _idCardBackPath;
 
@@ -345,14 +349,17 @@ class DashedBorderPainter extends CustomPainter {
     const dashSpace = 5.0;
 
     final path = Path()
-      ..addRRect(RRect.fromRectAndRadius(
-        Rect.fromLTWH(0, 0, size.width, size.height),
-        const Radius.circular(12),
-      ));
+      ..addRRect(
+        RRect.fromRectAndRadius(
+          Rect.fromLTWH(0, 0, size.width, size.height),
+          const Radius.circular(12),
+        ),
+      );
 
     _drawDashedPath(canvas, path, paint, dashWidth, dashSpace);
   }
 
+  // dashed rectangle box
   void _drawDashedPath(
     Canvas canvas,
     Path path,
