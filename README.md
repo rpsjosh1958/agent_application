@@ -16,8 +16,6 @@ flutter run
 - `intl` - Date formatting and localization
 - `camera` - Camera preview in circular modal
 
-## Key Features Implementation
-
 ## Form Management
 - Multi-step: Personal details → Selfie → ID cards → Summary
 - Field validation: Required fields, format checks, error messages
